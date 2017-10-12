@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Nosifer" rel="stylesheet">
+		<style>
+			.box { 
+				border: 1px solid red;
+				width: 1in;
+				height: 1in; 
+				display: inline-block;
+				text-align: left;
+			}
+			.div1 {
+				color: red;
+			}
+			.div2 {
+				color: green;
+			}
+			.div1, 
+			.div2 {
+				width: 3in;
+				border: 1px solid red;
+			}
+			.horizontal-rule {
+				border-top: 1px solid gray;
+				margin-left: 5%;
+				width: 90%;
+			}
+			.half-inch-strut {
+				height: .5in;
+				width: 1in;
+				border: 1px dotted green;
+				margin: 1px 2px 3px 4px;
+				padding-top: 10px;
+				padding-left: 11px;
+				padding-right: 12px;
+				padding-bottom: 13px;
+				;
+			}
+			.yellow-background {
+				background-color: yellow;
+			}
+			#name-row {
+			}
+			.container{
+				border: 4px dashed blue;
+				text-align: center;
+				width: 100%;
+			}
+			.red{
+				color: red;
+			}
+			.container .half-inch-strut {
+				background-color: white;
+			}
+			.myDiv {
+				color: red;
+				border: 1px solid black;
+				width: 100%;
+				/*font: 14pt Verdana, Helvetica, sans-serif;*/
+				font-family: 'Nosifer', cursive;
+				font-size: 14pt;
+				
+			}
+			.myDiv::before {
+				content:"[";
+			}
+			.myDiv::after {
+				content:"]";
+			}
+			a {
+				display: block;
+				margin-top: .25in;
+				margin-bottom: 0.25in;
+				border: 1px solid red;
+			}
+			a:visited {
+				color: red;
+			}
+			a:link {
+				background-color: green;
+			}
+			@media screen and (max-width: 240px) {
+				.myDiv {
+					width: 1in;
+				}
+			}
+			@media screen and (min-width: 240px) and (max-width: 500px) {
+				.myDiv {
+					width: 2in;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1>In HW 3 docroot</h1>
+		<div class="horizontal-rule"></div>
+		Text <a href="http://redwood.org">Redwood</a> Text
+		<div class="container">
+			<div class="box" style="">x</div>
+		</div>
+		<center>
+		<div style="width:100%; position:absolute; top:.55in; right:.5in;" class="box" style="float:left; margin-right: 1em">abc</div>
+		</center>
+		text text text
+		text text text
+		text text text
+		<div class="box">1</div>
+		<div class="box">2</div>
+		<div class="box">3</div>
+		<div class="box">4</div>
+		<div class="myDiv">foo</div>
+		<div class="div1">Div1</div>
+		<div class="div2">Div2</div>
+		<div style="border: 1px solid red; margin: 0.1in 0.1in 0.1in 0.1in">
+			<form action="http://localhost/echo.php" method="post">
+				<label for="date-element">Choose the date.</label>
+				<input type="date" id="date-element"></input>
+				<br>
+				<input id="ri" type="range" min="1" max="100"></input>
+				<label for="ri">My Range</label>
+				<br>
+				<input id="email" type="email" required></input>
+				<label for="email">My Email</label>
+				<br>
+				<select>
+						<option value="dog">Dog</option>
+						<option value="cat">Cat</option>
+						<option value="bird">Bird</option>
+				</select>
+				<br>
+				<label for="MyData">Pick an animal.</label>
+				<datalist id="MyData">
+						<option label="Dog" value="dog"></option>
+						<option label="Cat" value="cat"></option>
+						<option label="Bird" value="bird"></option>
+				</datalist>
+				<div class="container">
+					<div class="half-inch-strut yellow-background red">Strut</div>
+				</div>
+				<div class="half-inch-strut yellow-background">
+					Second strut.
+				</div>
+				<table>
+					<tr id="name-row"><td>Name: </td><td><input type="text" name="name-field"></td></tr>
+					<tr><td>Address: </td><td><input type="text" name="address-field"></td></tr>
+				</table>
+			<input type="submit">
+			</form>
+		</div>
+	</body>
+</html>

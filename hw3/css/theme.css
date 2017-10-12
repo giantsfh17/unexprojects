@@ -1,0 +1,51 @@
+	h1 {font-family: 'Mukta', sans-serif;
+		}
+	h2 {font-family: 'Mukta', sans-serif;
+		}
+	h3 {font-family: 'Mukta', sans-serif;
+		}
+	h4 {font-family: 'Mukta', sans-serif;
+		}
+	p {font-family: 'Mukta', sans-serif;
+		}
+	li {font-family: 'Mukta', sans-serif;
+		}
+	div {font-family: 'Mukta', sans-serif;
+		}
+	.box {
+		width: 1in;
+		height: 1in; 
+		display: inline-block;
+	}
+	@media screen and (max-width: 350px) {
+		.box {
+			width: 1in;
+			height: 1in;
+		}
+	}
+	@media screen and (min-width: 350px) {
+		.box {
+			width: 2in;
+			height: 2in;
+			float: right; 
+			margin-left: 1em;
+		}
+	}
+	a:visited {
+		color: rgb(100,149,237);
+		font-family: 'Mukta', sans-serif;
+		text-decoration: none;
+		border-bottom: 1px dotted rgb(100,149,237);
+	}
+	a:link {
+		color: blue;
+		font-family: 'Mukta', sans-serif;
+		text-decoration: none;
+		border-bottom: 1px blue dashed;
+	}
+	.content {
+		margin-left: 0.25in;
+	}
+	.boldheader {
+		font-weight: bold;
+	}
