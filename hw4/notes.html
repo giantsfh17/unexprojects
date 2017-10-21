@@ -1,0 +1,44 @@
+<script>
+'use strict';
+/*var current = 50;
+if(current <= 100){
+    alert(current + " true");
+}
+else {
+    alert(current + " false");
+}
+const minCount = 0;
+var i = 6;
+while( i > minCount){
+    --i; //use i+= if number is not 1
+    console.log(i);
+}
+for(var i=5; i > minCount; --i) {
+    console.log(i);
+}*/
+var strings = [ "a", "b", "c" ];
+strings[0] = "A";
+strings[3] = "D";
+for ( var current in strings ) {
+    console.log( current );
+}
+for( var current of strings ) {
+   console.log( current );
+}
+var lineItem = { //JSON
+    'description' : "My Product",
+    'price' : 1.23,
+    'quantity' : 5,
+    'pastCost' : [10.1, 20.2, 30.3],
+};
+var order = [
+    { description: "Item1", cost: "1.2"},
+    { description: "Item2", cost: "3.4"},
+]
+for ( var current of order ) {
+    document.getElementById("description") = String(current)
+}
+var fieldOfInterest = "description"
+console.log( lineItem.description );
+console.log( lineItem[fieldOfInterest] );
+</script>

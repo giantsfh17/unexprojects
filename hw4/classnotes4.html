@@ -1,0 +1,71 @@
+<script>
+'use strict'; //only use for javascript
+var current = 50; //variable has to be declared before it can be used, if strict wasn't there then current = 5; would make a new var
+var title = "My Web\" Page"; //declare variables with var, this will help if mispelled later
+//must initialize variables, only declare a variable once the information to give it an intitial value is present
+const PI = 3.1415;
+title = "New Title";
+PI = 10;
+window.onload = function () {
+	//var current = 10; variable only present in this function, otherwise it would modify the variable at the global level
+
+	document.getElementById("currentValue").innerHTML = String(current);
+	document.getElementById("myProgressBar").value = current;
+	document.getElementById("myMeter").value = current;
+}
+
+//var change = function(amount) { is same as the next line, but is harder to read
+	function change( amount ) {
+
+	var bar   = document.getElementById("myProgressBar");
+	var meter = document.getElementById("myMeter");
+
+	current 	+= amount ;
+	bar.value   =  current;
+	meter.value =  current;
+
+	document.getElementById("currentValue").innerHTML = String(current);
+}
+
+var up   = function () { change( 5); }
+var down = function () { change(-5); }
+
+function sleep(time) {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, time);
+    });
+}
+
+</script>
+<!-- ====================================================================== -->
+<style>
+.current-value {
+	font-weight:bold;
+	font-size: 20pt
+}
+</style>
+<!-- ====================================================================== -->
+Current value: <span class="current-value" id="currentValue"> 50 </span>
+<h1>Hello</h1>
+<form   id="myform"
+		action="/echo.php"
+		method="post">
+
+	<input type="hidden" name="myValue" value="50"></input>
+
+	<p>
+	<progress id="myProgressBar" value="50" max="100"></progress>
+
+	<p>
+	<meter id="myMeter"
+		min="20" max="80"
+		value="50"
+		low="40" high="60" optimum="50">
+	</meter>
+
+	<p>
+	<button type="button" onclick="down();"> - </button> <!-- type defaluts to submit in Chrome -->
+	<button type="button" onclick="up()">    + </button>
+
+	<button> Submit </button>
+</form>
