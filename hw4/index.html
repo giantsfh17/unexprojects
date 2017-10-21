@@ -1,36 +1,72 @@
-<!DOCTYPE HTML>
-<head>
-	<script>
-	'use strict'
-		var description = ["Product A <br>" , "Product B <br>" , "Product C <br>"];
-		var priceValue = ['50.00 <br>', '100.00 <br>', '75.00 <br>'];
-		var quantity = ['1 <br>','2 <br>','3 <br>'];
-		window.onload = function () {
-			for (var i = 0; i < description.length; i++) {
-			document.getElementById("description").innerHTML = description;
-		}
-			for (var i = 0; i < priceValue.length; i++) {
-			document.getElementById("priceValue").innerHTML = priceValue;
-		}
-			for (var i = 0; i < quantity.length; i++) {
-			document.getElementById("quantity").innerHTML = quantity;
-		}
-		}
-		var sum = 0
-		sum += 50
-		sum += 100
-		sum += 75
-	</script>
-</head>
-<body>
-	<h4 style="float:left;">Item</h4>
-	
-	<h4 style="float:right;"">Price</h4>
-	
-	<center>
-	<h4>Quantity</h4>
-	</center>
-	<div><div id="description" style="float:left;"></div><div id="priceValue" style="float:right;"></div><div id="quantity" style="padding-left: 5.5in; padding-right: 5.5in"></div></div>
-	<br><p>the total cost is $<script>document.write(sum)</script></p>
-</body>
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.description {
+				font-weight: bold;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				padding: 0.5em 0.5em 0.5em 0.5em;
+				width: 2.5in;
+			}
+		</style>
+		<script>
+			/*var up = function(amount) { change(amount); }
+			function down( amount )   { change(-amount); }*/
+			var order = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 3
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}
+				];
+			function getHTMLForLineItem( lineItem ) {
+				return	  '<div class="line-item">'
+							+ '<div class="description">'
+							+ 		lineItem.description 
+							+ "</div>"
+							+ " Cost: " 
+							+ lineItem.cost 
+							+ " Quantity: " 
+							+ lineItem.quantity
+						+ "</div>"
+						;
+			}
+			function computeTotal() {
+				var total = 0.0;
+				for( currentItem of order ) 
+					total += currentItem.cost;
+					return total;
+			}
+			function startup() {
+				var orderDisplay = "";
+				for( currentItem of order ) {
+					orderDisplay += getHTMLForLineItem( currentItem );
+				}
+				document.getElementById("the-total").innerHTML = String( computeTotal() );
+				document.getElementById("the-line-item").innerHTML = orderDisplay;
+			}
+			window.onload = startup;
+		</script>
+	</head>
+	<body>
+		<h1 style="color: blue"> Product List </h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Total cost: <span id="the-total">Insert total here</span></h1>
+			<div id="the-line-item">
+			</div>
+		</form>
+	</body>
 </html>
