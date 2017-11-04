@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.description {
+				font-weight: bold;
+				color: blue;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				border-radius: 10px;
+				padding: 1em 1em 1em 1em;
+				width: 3in;
+			}
+		</style>
+		<script>
+			var order = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 3
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}
+				];
+			var total = 0.0;
+
+			function getHTMLForLineItem( lineItem ) {
+				return	  '<div class="line-item">'
+							+ '<div class="description">'
+							+ 		lineItem.description 
+							+ "</div>"
+							+ " Cost: " 
+							+ lineItem.cost 
+							+ " Quantity: " 
+							+ lineItem.quantity
+						+ "</div>"
+						;
+				total += lineItem.cost;
+				document.getElementById("the-total").innerHTML = total;
+			}
+
+			function change( amount ) {
+
+				var bar = document.getElementById("myProgressBar");
+				bar.value += amount;
+
+				var display = document.getElementById("currentValue");
+				display.innerHTML = String( bar.value );
+			}
+
+			var up = function(amount) { change(amount); } 
+			function down( amount )   { change(-amount); }
+
+			function startup() {
+				var orderDisplay = "";
+				for( currentItem of order ) {
+					orderDisplay += getHTMLForLineItem( currentItem );
+				}
+
+				document.getElementById("the-line-item").innerHTML = orderDisplay;
+			}
+			window.onload = startup;
+		</script>
+	</head>
+	<body>
+		<h1> Product List </h1>
+
+		<form id="myform" action="/echo.php" method="post">
+			<input type="hidden" name="myValue" value="50" ></input>
+
+			<h1>Current Value is <span id="currentValue">xxx</span></h1>
+			<h1>Total <span id="the-total">xxx</span></h1>
+
+			<div id="the-line-item">
+			</div>
+
+			<progress id="myProgressBar" value="10" max="100"></progress>
+			<br>
+			<button type="button" onClick="down(10);" > - </button> <br>
+
+			<br>
+			<button type="button" onClick="up(10);"> + </button> <br>
+		</form>
+	</body>
+</html>

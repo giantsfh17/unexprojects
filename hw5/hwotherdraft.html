@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.description {
+				font-weight: bold;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				padding: 0.5em 0.5em 0.5em 0.5em;
+				width: 2.5in;
+			}
+		</style>
+		<script>
+			var order = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 3
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}
+				];
+			function getHTMLForLineItem( lineItem ) {
+				return	  '<div class="line-item">'
+							+ '<div class="description">'
+							+ 		lineItem.description 
+							+ "</div>"
+							+ 'div id="totalCost"+index+"class="totalCost">' 
+							+ lineItem.cost  * lineItem.quantity
+							+ '</div>'
+							+ " Quantity: " 
+							+ 'button id="buttonUp" type="button" onClick="adjustAmount(' + index + ', -1);"> - </button>'
+							+ 'button id="buttonDown" type="button" onClick="adjustAmount(' + index, + ', 1);"> + </button>'
+							+		lineItem.quantity
+
+						+ "</div>"
+						;
+			}
+			/*function changeQty() {
+				var quantity = 0.0
+				for ( currentItem of order )
+					quantity = getHTMLForLineItem( lineItem.quantity )
+			}*/
+			/*function subtractQty(){
+    			if(document.getElementById("the-line-item").quantity - 1 < 0)
+        			return;
+    			else
+    				document.getElementById("the-line-item").quantity--;
+    		}*/
+    		function adjustAmount( index, amount ){
+    			var index = 0;
+    			var neworder = order[index];
+    			neworder.quantity += amount;
+    			if( neworder.quantity < 0)
+    				neworder.quantity = 0;
+    			alert( neworder.itemname + " quantity ==" + neworder.quantity );
+    			document.getElementById("totalCost")
+    		}
+			function computeTotal() {
+				var total = 0.0;
+				for( currentItem of order ) 
+					total += currentItem.cost*currentItem.quantity;
+					return total;
+			}
+			function startup() {
+				var orderDisplay = "";
+				for( index in order ) {
+					orderDisplay += getHTMLForLineItem( index );
+				}
+				document.getElementById("the-total").innerHTML = String( computeTotal() );
+				document.getElementById("the-line-item").innerHTML = orderDisplay;
+			}
+			window.onload = startup;
+		</script>
+	</head>
+	<body>
+		<h1 style="color: blue"> Product List </h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Total cost: <span id="the-total">Insert total here</span></h1>
+			<div id="the-line-item">
+			</div>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<script>
+			var order = [
+				{
+					"description": "Product A",
+					"cost" : 3.5,
+					"quantity"  : 3
+				},
+				{
+					"description": "Product B",
+					"cost" : 8.5,
+					"quantity"  : 4
+				},
+				{
+					"description": "Product C",
+					"cost": 8.8,
+					"quantity": 7
+				}
+			];
+			var total = 0.0;
+			function getHTMLForLineItem( lineItem ) {
+				return '<div class="line-item">'
+						+ '<div class="description">'
+						+ 		lineItem.description
+						+ '</div>'
+				 		+ " Cost: " 
+				 		+ lineItem.cost
+				 	    + " Quantity: "
+				        + lineItem.quantity
+					+   "</div>"
+					;
+				total += lineItem.cost;
+				document.getElementById("thetotal").innerHTML = total;
+			}
+			function startup() {
+				var orderDisplay = "";
+				for( currentItem of order ) {
+					orderDisplay += getHTMLForLineItem( currentItem );
+				}
+				document.getElementById("the-line-item").innerHTML = orderDisplay;
+			}
+			window.onload = startup;
+		</script>
+	</head>
+</html>

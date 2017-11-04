@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<style>
+			.description {
+				font-weight: bold;
+				color: blue;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid red;
+				border-radius: 10px;
+				padding: 1em 1em 1em 1em;
+				width: 3in;
+			}
+		</style>
+		<script>
+			var lineItem = [ {
+				"description": "this is the thing",
+				"cost" : 1.0,
+				"qty" : 1
+			},
+			{
+				"description": "this is the second thing",
+				"cost" : 2.0,
+				"qty" : 4
+			} ]
+
+			var total = 0.0;
+			function getHTMLForLineItem( lineItem ) {
+				return '<div class="line-item">'
+						+ '<div class="description">'
+						+ 		lineItem.description
+						+ '</div>'
+				 		+ " Cost: " 
+				 		+ lineItem.cost
+				 	    + " Quantity: "
+				        + lineItem.qty
+					+   "</div>"
+					;
+				total += lineItem.cost;
+				document.getElementById("thetotal").innerHTML = total;
+			}
+			function change( amount ) {
+				var bar = document.getElementById("myProgressBar");
+				bar.value += amount;
+				var display = document.getElementById("currentValue");
+				display.innerHTML = String( bar.value );
+			}
+			var up = function(amount) { //syntax for up and down functions different, but have the same outcome
+				change(amount);
+			}
+			function down( amount ) { //can have parameters
+				change(-amount);
+			}
+			function startup() {
+				document.getElementById("the-order").innerHTML = getHTMLForLineItem(lineItem[0]);
+				var orderDisplay = "";
+				for( currenItem of lineItem ) {
+					orderDisplay += getHTMLForLineItem( currentItem );
+				}
+				/*for (i = order.length ; i > 0; --numItems ) {
+					alert( order[i].description );
+				}*/
+			}
+			window.onload = startup;
+		</script>
+	</head>
+	<body>
+		<h1>I'm Here</h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Current Value is <span id="currentValue">xxx</span></h1>
+			<h1>Current Total is <span id="thetotal">xxx</span></h1>
+			<div id="the-order"></div>
+			<input type="hidden" name="myValue" value="50"></input>
+			<progress id="myProgressBar" value="10" max="100"></progress><br>
+			<button type="button" onClick="down(10);"> - </button><br>
+			<button type="button" onClick="startup()"> + </button><br>
+		</form>
+	</body>
+</html>

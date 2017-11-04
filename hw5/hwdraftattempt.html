@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.description {
+				font-weight: bold;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				padding: 0.5em 0.5em 0.5em 0.5em;
+				width: 2.5in;
+			}
+		</style>
+		<script>
+			var order = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 3
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}
+				];
+			function change( amount ) {
+
+				var bar = order.quantity;
+				bar.value += amount;
+
+				var display = order.quantity;
+				display.innerHTML = String( bar.value );
+			}
+
+			var up = function(amount) { change(amount); } 
+			function down( amount )   { change(-amount); }
+			
+			function getHTMLForLineItem( lineItem ) {
+				return	  '<div class="line-item">'
+							+ '<div class="description">'
+							+ 		lineItem.description 
+							+ "</div>"
+							+ " Cost: " 
+							+ lineItem.cost 
+							+ " Quantity: " 
+							+ lineItem.quantity
+						+ "</div>"
+						;
+			}
+			function computeTotal() {
+				var total = 0.0;
+				for( currentItem of order ) 
+					total += currentItem.cost*currentItem.quantity;
+					return total;
+			}
+			function startup() {
+				var orderDisplay = "";
+				for( currentItem of order ) {
+					orderDisplay += getHTMLForLineItem( currentItem );
+				}
+				document.getElementById("the-total").innerHTML = String( computeTotal() );
+				document.getElementById("the-line-item").innerHTML = orderDisplay;
+			}
+			window.onload = startup;
+		</script>
+	</head>
+	<body>
+		<h1 style="color: blue"> Product List </h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Total cost: <span id="the-total">Insert total here</span></h1>
+			<div id="the-line-item">
+			</div>
+			<button type="button" onClick="down(10);" > - </button> <br>
+			<button type="button" onClick="up(10);"> + </button> <br>
+		</form>
+	</body>
+</html>
