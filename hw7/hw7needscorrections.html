@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.description {
+				font-weight: bold;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				padding: 0.5em 0.5em 0.5em 0.5em;
+				width: 2.5in;
+			}
+			.qtyzero { /*class is called later in order to remove items*/
+				display: none;
+			}
+			.the-total {
+				display: inline-block;
+			}
+		</style>
+		<script>
+			'use strict'
+			var order = [ /*quantity is not update on-screen, so there could be an issue with AdjustAmount*/
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 1
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}
+				];
+			function getHTMLForLineItem( lineItem, index ) {
+				return	  '<div class="line-item' + index + '">'
+							+ '<div class="description">'
+							+ 		lineItem.description 
+							+ "</div>"
+							+ " Cost: " 
+							+ lineItem.cost 
+							+ " Quantity: " 
+							+ '<div class="quantity">'
+							+ '<button id="buttonDown" type="button" onClick="adjustAmount(' + index + ', -1)"> - </button>'
+							+ '<button id="buttonUp" type="button" onClick="adjustAmount(' + index + ', 1)"> + </button>'
+							+ 	lineItem.quantity
+							+ '</div>'
+						+ "</div>"
+						;
+			}
+			function remove(index) {
+				var id = "line-item" + index;
+			    var element = document.getElementById(id);
+			    element.className = "qtyzero";
+			} //Not working when called later on (items are not actually removed from the list on the screen with qty 0)
+			function adjustAmount( index, amount )	{
+    			var neworder = order[index];
+    			neworder.quantity += amount;
+    			if( neworder.quantity < 0) {
+    				neworder.quantity = 0;
+    				remove(index); //possible that if loop is not being executed properly as items are not removed
+    			}
+    			document.getElementById("the-total")
+    			computeTotal();
+    		}
+			function computeTotal() {
+				var total = 0.0;
+				for( var item of order )
+					total += item.cost * item.quantity;
+				document.getElementById("the-total").innerHTML = String( total );
+			}
+			function startup() {
+				var orderDisplay = "";
+				for( var index = 0; index < order.length; ++index ) {
+					orderDisplay = getHTMLForLineItem( order[index], index );
+					document.getElementById("all-line-items").innerHTML += orderDisplay;
+				}
+				document.getElementById("the-total").innerHTML = String( computeTotal() );
+			}
+			window.onload = startup;
+		</script>
+	</head>
+	<body>
+		<h1 style="color: blue"> Product List </h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Total cost: <span id="the-total">Insert total here</span></h1>
+			<div id="all-line-items">
+			</div>
+		</form>
+	</body>
+</html>
