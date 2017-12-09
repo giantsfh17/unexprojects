@@ -1,0 +1,15 @@
+<script>
+	function Customer( name, address ) {
+		this._name = name;
+		this._address = address;
+		this.showName = function() {
+			alert( this._name );
+		}
+	}
+	var theCustomers = [];
+	theCustomers[0] = new Customer( "Fred", "123 Main Street" );
+	theCustomers[1] = new Customer( "Wilma", "123 Main Street" );
+	theCustomers[0].showName();
+	theCustomers[1].showName();
+</script>
+<h1>Hello</h1>
