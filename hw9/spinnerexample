@@ -1,0 +1,76 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+
+
+<!--
+<script src="/holub-tools-min.js" ></script>
+-->
+<script src="Spinner.js" ></script>
+
+<!-- <link rel="stylesheet" type="text/css" href="/holub-tools.css">
+-->
+<link rel="stylesheet" type="text/css" href="./holub-tools.css">
+
+<script>
+/* var holub = require('holub_tools'); */
+$( function() {
+	// Create a spinner and insert it into the my-spinner div
+	//
+	new holub.Spinner( "my-spinner", 
+				 "img/wheel_plusminus-2.svg",
+		         function( rotation ){
+					var segment = holub.Spinner.getSegment(rotation, 10, 2) - 3;
+					 $("#my-spinner-segment").text(
+					     (segment > 0 ? "+" : "") +
+						 String( segment )   // map from segment number to 0 +/- 2
+					 );
+				 }
+	);
+});
+</script>
+</head>
+<body>
+	<h1>Spinner</h1>
+
+	<!-- Create a spinner entirely in HTML. 
+	 |	 This div is identified as a spinner by the ag-spinner
+	 |	 class. There's no CSS for this class (though there could
+	 |	 be if you want to define styles for all spinners), and
+	 |	 you can add additional classes if you like.
+	 |	 The optional onComplete attribute specifies the *name*
+	 |	 (only) of the function to call when each spin finishes.
+	 |	 That function is passed a single argument holding the
+	 |	 spinner position at completion in degrees (clockwise
+	 |	 from 12 o'clock).
+	 |	 The image is sized to fit within this div (by width).
+	 |   If you put anything inside this div, it will be placed
+	 |   above the spinner.
+	 +-->
+	<script>
+	function spinner2Complete(rotation){
+		var r1 = rotation;
+		var r2 = $("#spinnerId").attr("rotation");
+		if( r1 != r2 )
+			alert('$("#spinnerId").attr("rotation"); isnot working!')
+		$("#offset-in-degrees").text( String(rotation) );
+	}
+	</script>
+	<div class="holub-spinner"
+	     id="spinnerId"
+		 img="img/reverseCompassRose.png"
+		 style="width:200px; float:left; display:inline-block; border:1px solid red;"
+		 onComplete="spinner2Complete(this.rotation);"
+	 >
+		 <center><h2 id="offset-in-degrees">0</h2></center>
+	</div>
+
+	<!-- A spinner is inserted into this div by explicit javascipt code.
+ 	 | 	The spinner is positioned at the bottom of the div, beneath any
+	 |	content it may already have. 
+	 +-->
+	<div id="my-spinner" 
+		 style="margin-left: 1em; width:200px; float:left; display:inline-block;">
+		<center><h2 id="my-spinner-segment">???</h2></center>
+	</div>
+
+</body>

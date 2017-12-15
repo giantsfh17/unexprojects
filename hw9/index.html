@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+		<style>
+			.description {
+				font-weight: bold;
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				padding: 0.5em 0.5em 0.5em 0.5em;
+				width: 2.5in;
+			}
+			.qtyzero { /*class is called later in order to remove items*/
+				display: none;
+			}
+			.the-total {
+				display: inline-block;
+			}
+		</style>
+		<script>
+			'use strict'
+			function LineItem( description, cost, quantity, name, address ) {
+				this._description = description;
+				this._cost = cost;
+				this._quantity = quantity;
+				this._name = name;
+				this._address = address;
+				this.putRepresentationIn = function(containerid, i) {
+					document.getElementById(containerid).innerHTML += '<div class="line-item' + i + '">'
+							+ '<div class="description">'
+							+ this._description 
+							+ "</div>"
+							+ " Cost: "
+							+ this._cost 
+							+ " Quantity: " 
+							+ '<div class="quantity">'
+							+ '<button id="buttonDown" type="button" onClick="adjustAmount('+i+', -1)"> - </button>'
+							+ '<button id="buttonUp" type="button" onClick="adjustAmount('+i+', 1)"> + </button>'
+							+ this._quantity
+							+ '</div>'
+						+ "</div>"
+						;
+				}
+			}
+			var JSONitems = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 1
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}]
+			var customerInfo = 
+				{
+					"name": "Bob",
+					"address": "500 A Road"
+				}
+			var customer = []
+			var order = [] //quantity is not updated on-screen, so there could be an issue with AdjustAmount
+			
+			/*function getHTMLForLineItem( lineItem, index ) {
+				return	  '<div class="line-item' + index + '">'
+							+ '<div class="description">'
+							+ 		lineItem.description 
+							+ "</div>"
+							+ " Cost: " 
+							+ lineItem.cost 
+							+ " Quantity: " 
+							+ '<div class="quantity">'
+							+ '<button id="buttonDown" type="button" onClick="adjustAmount(' + index + ', -1)"> - </button>'
+							+ '<button id="buttonUp" type="button" onClick="adjustAmount(' + index + ', 1)"> + </button>'
+							+ 	lineItem.quantity
+							+ '</div>'
+						+ "</div>"
+						;
+			}*///Not working when called later on (items are not actually removed from the list on the screen with qty 0)
+			/*function startup() {
+				var orderDisplay = "";
+				for( var index = 0; index < order.length; ++index ) {
+					orderDisplay = getHTMLForLineItem( order[index], index );
+					document.getElementById("all-line-items").innerHTML += orderDisplay;
+				}
+				document.getElementById("the-total").innerHTML = String( computeTotal() );
+				for( var i of order ) {
+					order[i].showName();
+				}
+			}*/
+			//window.onload = startup;
+			$( function(){
+				for ( var i=0; i < JSONitems.length; ++i ) {
+					order[i] = new LineItem(JSONitems[i].description, JSONitems[i].cost, JSONitems[i].quantity, customerInfo.name, customerInfo.address);
+					order[i].putRepresentationIn( "all-line-items", i );
+				}
+				computeTotal();
+			}
+			);
+			function computeTotal() {
+				var total = 0.0;
+				for ( var i=0; i < JSONitems.length; ++i ) {
+					total += order[i]._cost * order[i]._quantity;
+				}
+				document.getElementById("the-total").innerHTML = String( total );
+			}
+			function remove(i) {
+			    //document.getElementById("all-line-items").className = "qtyzero";
+			    order[i].className = "qtyzero";
+			}
+			function adjustAmount( i, amount )	{
+    			order[i]._quantity += amount;
+    			if( order[i]._quantity <= 0) {
+    				order[i]._quantity = 0;
+    				remove(i); //possible that if loop is not being executed properly as items are not removed
+    			}
+    			computeTotal();
+    		}
+		</script>
+	</head>
+	<body>
+		<h1 style="color: blue"> Shopping cart </h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Total cost: <span id="the-total">Insert total here</span></h1>
+			<div id="all-line-items">
+			</div>
+		</form>
+	</body>
+</html>
