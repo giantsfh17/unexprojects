@@ -1,0 +1,21 @@
+var JSONitems = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 1
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}]
+			var customerInfo = 
+				{
+					"name": "Bob",
+					"address": "500 A Road"
+				}

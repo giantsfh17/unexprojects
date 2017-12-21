@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+		<style>
+			.description {
+				font-weight: bold;
+				display: inline;
+			}
+			.cost {
+				display: inline;
+			}
+			.line-item {
+				border: 1px solid black;
+				padding: 0.5em 0.5em 0.5em 0.5em;
+				width: 2.5in;
+			}
+			.qtyzero {
+				display: none;
+			}
+			.the-total {
+				display: inline-block;
+			}
+		</style>
+		<script>
+			'use strict'
+			function LineItem( description, cost, quantity, name, address ) {
+				this._description = description;
+				this._cost = cost;
+				this._quantity = quantity;
+				this._name = name;
+				this._address = address;
+				this.putRepresentationIn = function(containerid, i) {
+					var lineItemDiv = $('<div class="line-item" id="line-item' + i + '">' );
+					var descriptionDiv = $('<div class="description" />');
+					descriptionDiv.text(this._description);
+					var costDiv = $('<div class = "cost" />');
+					costDiv.text(this._cost);
+					var quantityDiv = $('<div class="quantity" />');
+					quantityDiv.html('<button id="buttonDown" type="button" onClick="adjustAmount('+i+', -1)"> - </button>'
+							+ '<button id="buttonUp" type="button" onClick="adjustAmount('+i+', 1)"> + </button>'
+							+ '<span id="qty' + i + '">'
+							+ this._quantity
+							+ '</span>'
+							+ '</div>');
+					lineItemDiv.append(descriptionDiv,costDiv, quantityDiv);
+					$( "#all-line-items" ).append(lineItemDiv);
+				}
+			}
+			var JSONitems = [
+					{
+						"description": "Product A",
+						"cost" : 3.5,
+						"quantity"  : 1
+					},
+					{
+						"description": "Product B",
+						"cost" : 8.5,
+						"quantity"  : 4
+					},
+					{
+						"description": "Product C",
+						"cost": 8.8,
+						"quantity": 7
+					}]
+			var customerInfo = 
+				{
+					"name": "Bob",
+					"address": "500 A Road"
+				}
+			var customer = []
+			var order = []
+			$( function(){
+				for ( var i=0; i < JSONitems.length; ++i ) {
+					order[i] = new LineItem(JSONitems[i].description, JSONitems[i].cost, JSONitems[i].quantity, customerInfo.name, customerInfo.address);
+					order[i].putRepresentationIn( "all-line-items", i );
+				}
+				computeTotal();
+			}
+			);
+			function computeTotal() {
+				var total = 0.0;
+				for ( var i=0; i < JSONitems.length; ++i ) {
+					total += order[i]._cost * order[i]._quantity;
+				}
+				$( "#the-total" ).text(total);
+			}
+			function remove(i) {
+			    $( "#line-item" + i).addClass("qtyzero");
+			}
+			function adjustAmount( i, amount )	{
+    			order[i]._quantity += amount;
+    			if( order[i]._quantity <= 0) {
+    				order[i]._quantity = 0;
+    				remove(i);
+    			}
+    			else { 
+    				$( "#qty" + i ).text(order[i]._quantity);
+    			}
+    			computeTotal();
+    		}
+		</script>
+	</head>
+	<body>
+		<h1 style="color: blue"> Shopping cart </h1>
+		<form id="myform" action="/echo.php" method="post">
+			<h1>Total cost: <span id="the-total">Insert total here</span></h1>
+			<div id="all-line-items">
+			</div>
+		</form>
+	</body>
+</html>
